@@ -10,7 +10,6 @@ import 'package:flutter_app/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_app/screens/Reports.dart';
 
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -18,9 +17,7 @@ class MyApp extends StatelessWidget {
       title: "Roofing app",
       debugShowCheckedModeBanner: false,
       home: MainPage(),
-      theme: ThemeData(
-          accentColor: Colors.white70
-      ),
+      theme: ThemeData(accentColor: Colors.white70),
     );
   }
 }
@@ -32,7 +29,8 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 2;
-  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
     ReportsPage(),
     DealersPage(),
@@ -56,143 +54,129 @@ class _MainPageState extends State<MainPage> {
 
   checkLoginStatus() async {
     sharedPreferences = await SharedPreferences.getInstance();
-    if(sharedPreferences.getString("token") == null) {
-      //Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => LoginPage()), (Route<dynamic> route) => false);
-    }
+    /*if (sharedPreferences.getString("token") == null) {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
+          (Route<dynamic> route) => false);
+    }*/
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Jumbo")),
       drawer: Drawer(
-          child:  ListView(
-            // Important: Remove any padding from the ListView.
-            padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-            children: <Widget>[
-              DrawerHeader(
-                child: Center(
-                  child: ListView(
-                    shrinkWrap: true,
-              children: [
-                Image(image: AssetImage("assets/images/logo.jpg"),
-                height: 20,
-                width: 20,),
-                Text('Jumbo',
-                textAlign: TextAlign.center),
-            ],
-          ),
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+          children: <Widget>[
+            DrawerHeader(
+              child: Center(
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    Image(
+                      image: AssetImage("assets/images/logo.jpg"),
+                      height: 20,
+                      width: 20,
+                    ),
+                    Text('Jumbo', textAlign: TextAlign.center),
+                  ],
                 ),
               ),
-              Container(
-                height: 1,
-                color: Colors.grey,
-                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-              ),
-              ListTile(
-                title: Text('Dashboard',
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.bold)),
-                onTap: () {
-
-                },
-              ),
-              ListTile(
-                title: Text('Invoice',
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.bold)),
-                onTap: () {
-
-                },
-              ),
-              ListTile(
-                title: Text('Distributors',
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.bold)),
-                onTap: () {
-
-                },
-              ),
-              ListTile(
-                title: Text('Target & Achievements',
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.bold)),
-                onTap: () {
-
-                },
-              ),
-              ListTile(
-                title: Text('Sales Team',
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.bold)),
-                onTap: () {
-
-                },
-              ),
-              Container(
-                height: 1,
-                color: Colors.grey,
-                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
-              ),
-              Text('Company',
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.bold)),
-              ListTile(
-                title: Text('Employees',
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.bold)),
-                onTap: () {
-
-                },
-              ),
-              ListTile(
-                title: Text('Gallery',
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.bold)),
-                onTap: () {
-
-                },
-              ),
-              Container(
-                height: 1,
-                color: Colors.grey,
-                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
-              ),
-              Text('Settings',
+            ),
+            Container(
+              height: 1,
+              color: Colors.grey,
+              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+            ),
+            ListTile(
+              title: Text('Dashboard',
                   style: TextStyle(
-                      color: Colors.black,
+                      color: Colors.grey,
                       fontSize: 15.0,
                       fontWeight: FontWeight.bold)),
-              ListTile(
-                title: Text('Profile',
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.bold)),
-                onTap: () {
-
-                },
-              ),
-            ],
-          ),
+              onTap: () {},
+            ),
+            ListTile(
+              title: Text('Invoice',
+                  style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold)),
+              onTap: () {},
+            ),
+            ListTile(
+              title: Text('Distributors',
+                  style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold)),
+              onTap: () {},
+            ),
+            ListTile(
+              title: Text('Target & Achievements',
+                  style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold)),
+              onTap: () {},
+            ),
+            ListTile(
+              title: Text('Sales Team',
+                  style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold)),
+              onTap: () {},
+            ),
+            Container(
+              height: 1,
+              color: Colors.grey,
+              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+              margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
+            ),
+            Text('Company',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold)),
+            ListTile(
+              title: Text('Employees',
+                  style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold)),
+              onTap: () {},
+            ),
+            ListTile(
+              title: Text('Gallery',
+                  style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold)),
+              onTap: () {},
+            ),
+            Container(
+              height: 1,
+              color: Colors.grey,
+              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+              margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
+            ),
+            Text('Settings',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold)),
+            ListTile(
+              title: Text('Profile',
+                  style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold)),
+              onTap: () {},
+            ),
+          ],
+        ),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
@@ -223,9 +207,4 @@ class _MainPageState extends State<MainPage> {
       ),
     );
   }
-
-
-
 }
-
-

@@ -14,111 +14,130 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent));
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light
+        .copyWith(statusBarColor: Colors.transparent));
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-              colors: [Colors.blue, Colors.lightBlue],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter),
-        ),
-        child: _isLoading ? Center(child: CircularProgressIndicator()) : ListView(
-          children: <Widget>[
-            headerSection(),
-            textSection(),
-            Container(
-                margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                child: Text("Forgot password?",
-                    textAlign: TextAlign.right,
-                    style: TextStyle(color: Colors.white70))
-            ),
-            btnSignin(),
-            btnRegistration(),
-          ],
-        ),
+            // gradient: LinearGradient(
+            //     colors: [Colors.black, Colors.lightBlue],
+            //     begin: Alignment.topCenter,
+            //     end: Alignment.bottomCenter),
+            color: Colors.black),
+        child: _isLoading
+            ? Center(child: CircularProgressIndicator())
+            : ListView(
+                children: <Widget>[
+                  headerSection(),
+                  textSection(),
+                  Container(
+                      margin: EdgeInsets.fromLTRB(30, 10, 10, 10),
+                      child: Text("Forgot password?",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(color: Colors.blue))),
+                  btnSignin(),
+                  //btnRegistration(),
+                  textRegistration(),
+                ],
+              ),
       ),
     );
   }
 
   signIn(String phno, pass) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    Map data = {
-      'phone_no': phno,
-      'password': pass
-    };
+    Map data = {'phone_no': phno, 'password': pass};
     var jsonResponse = null;
-    var response = await post("https://defendersdevelopers.tech/roof/login.php", body: data);
-    if(response.statusCode == 200) {
+    var response = await post("https://defendersdevelopers.tech/roof/login.php",
+        body: data);
+    if (response.statusCode == 200) {
       jsonResponse = json.decode(response.body);
-      if(jsonResponse != null) {
+      if (jsonResponse != null) {
         setState(() {
           _isLoading = false;
         });
-        if(jsonResponse["success"] == false){
+        if (jsonResponse["success"] == false) {
           showToast("wrong credentials");
-        }else {
+        } else {
           sharedPreferences.setString("token", jsonResponse['phone_no']);
-          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-              builder: (BuildContext context) => MainPage()), (
-              Route<dynamic> route) => false);
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (BuildContext context) => MainPage()),
+              (Route<dynamic> route) => false);
         }
-        }
-    }
-    else {
+      }
+    } else {
       setState(() {
         _isLoading = false;
       });
       print(response.body);
     }
   }
-  goToReg(){
-    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => RegisterPage()), (Route<dynamic> route) => false);
+
+  goToReg() {
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (BuildContext context) => RegisterPage()),
+        (Route<dynamic> route) => false);
   }
 
   Container btnSignin() {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: 40.0,
-      padding: EdgeInsets.symmetric(horizontal: 15.0),
-      margin: EdgeInsets.only(top: 15.0),
+      height: 50.0,
+      padding: EdgeInsets.symmetric(horizontal: 30.0),
+      margin: EdgeInsets.only(top: 120.0),
       child: RaisedButton(
         onPressed: () {
-          if(noController.text == "" || passwordController.text == ""){
+          if (noController.text == "" || passwordController.text == "") {
             showToast("Empty field");
-          }else {
+          } else {
             setState(() {
               _isLoading = true;
             });
             signIn(noController.text, passwordController.text);
           }
         },
-        elevation: 0.0,
-        color: Colors.pink,
-        child: Text("Sign In", style: TextStyle(color: Colors.white70)),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+        elevation: 3.0,
+        hoverColor: Colors.blueGrey,
+        color: Colors.grey,
+        child: Text("Sign In", style: TextStyle(color: Colors.white)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
       ),
     );
   }
-  Container btnRegistration() {
+
+  /*Container btnRegistration() {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: 40.0,
-      padding: EdgeInsets.symmetric(horizontal: 15.0),
+      height: 50.0,
+      padding: EdgeInsets.symmetric(horizontal: 30.0),
       margin: EdgeInsets.only(top: 15.0),
       child: RaisedButton(
-        onPressed: (){
+        onPressed: () {
           goToReg();
         },
-        elevation: 0.0,
-        color: Colors.pink,
-        child: Text("Register", style: TextStyle(color: Colors.white70)),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+        elevation: 3.0,
+        color: Colors.grey,
+        child: Text("Register", style: TextStyle(color: Colors.white)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
+      ),
+    );
+  }*/
+
+  Container textRegistration() {
+    return Container(
+      margin: EdgeInsets.only(top: 30.0),
+      child: Center(
+        child: Text(
+          'Signing in for the first time?',
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.blueAccent),
+        ),
       ),
     );
   }
@@ -128,18 +147,24 @@ class _LoginPageState extends State<LoginPage> {
 
   Container textSection() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
+      padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
       child: Column(
         children: <Widget>[
           TextFormField(
             controller: noController,
             cursorColor: Colors.white,
-
             style: TextStyle(color: Colors.white70),
             decoration: InputDecoration(
-              icon: Icon(Icons.phone, color: Colors.white70),
-              hintText: "Phone No.",
-              border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
+              hintText: "Email Address",
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+              ),
+              border: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white70)),
+              prefixIcon: Icon(Icons.email, color: Colors.white70),
               hintStyle: TextStyle(color: Colors.white70),
             ),
           ),
@@ -150,9 +175,18 @@ class _LoginPageState extends State<LoginPage> {
             obscureText: true,
             style: TextStyle(color: Colors.white70),
             decoration: InputDecoration(
-              icon: Icon(Icons.lock, color: Colors.white70),
               hintText: "Password",
-              border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white70)),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+              ),
+              border: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white70)),
+              prefixIcon: Icon(Icons.lock, color: Colors.white70),
+              suffixText: 'SHOW',
+              suffixStyle: TextStyle(color: Colors.blue),
               hintStyle: TextStyle(color: Colors.white70),
             ),
           ),
@@ -165,16 +199,19 @@ class _LoginPageState extends State<LoginPage> {
     return Container(
       margin: EdgeInsets.only(top: 50.0),
       padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
-      child: Text("SIGN IN",
-          style: TextStyle(
-              color: Colors.white70,
-              fontSize: 40.0,
-              fontWeight: FontWeight.bold)),
+      child: Center(
+        child: Text("SIGN IN",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 25.0,
+                fontWeight: FontWeight.bold)),
+      ),
     );
   }
-  showToast(String msg){
-    Toast.show(msg, context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
 
+  showToast(String msg) {
+    Toast.show(msg, context,
+        duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
   }
-
 }
