@@ -46,7 +46,7 @@ class HomePage extends StatelessWidget {
                                       Container(
                                           width: size.width / 2 - 35,
                                           height: size.width / 2 - 70,
-                                          color: Colors.blue,
+                                          color: Colors.blue[800],
                                           child: Center(
                                             child: Text(
                                               "5",
@@ -75,7 +75,7 @@ class HomePage extends StatelessWidget {
                                       Container(
                                           width: size.width / 2 - 35,
                                           height: size.width / 2 - 70,
-                                          color: Colors.blue,
+                                          color: Colors.blue[800],
                                           child: Center(
                                             child: Text(
                                               "8",
@@ -108,9 +108,10 @@ class HomePage extends StatelessWidget {
                     margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
                     child: Column(
                       children: [
-                        Row(
+                        Stack(
                           children: [
                             Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text("New Requests",
                                     style: TextStyle(
@@ -118,20 +119,23 @@ class HomePage extends StatelessWidget {
                                 Text(
                                   "Pending Action",
                                   style: TextStyle(
-                                      fontSize: 15, color: Colors.black12),
+                                      fontSize: 12, color: Colors.grey[900]),
                                 ),
                               ],
                             ),
-                            Container(
+                            Align(
                               alignment: Alignment.centerRight,
-                              height: 50,
-                              width: 50,
-                              color: Colors.yellow,
-                              child: Center(
-                                child: Text(
-                                  "2",
-                                  style: TextStyle(
-                                      fontSize: 20, color: Colors.white),
+                              child: Container(
+                                alignment: Alignment.centerRight,
+                                height: size.width/4,
+                                width: size.width/4,
+                                color: Colors.yellow[800],
+                                child: Center(
+                                  child: Text(
+                                    "2",
+                                    style: TextStyle(
+                                        fontSize: size.width/20, color: Colors.white),
+                                  ),
                                 ),
                               ),
                             )
@@ -199,22 +203,17 @@ class HomePage extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Conversion",
-                                style: TextStyle(
-                                    fontSize: 12, color: Colors.grey[900])),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text("537",
+                            Text("Top Sales",
                                 style: TextStyle(
                                     fontSize: 20, color: Colors.black)),
                             SizedBox(
                               height: 10,
                             ),
-                            Text(
-                              "+22% of target",
-                              style: TextStyle(
-                                  fontSize: 12, color: Colors.grey[900]),
+                            Text("April 2021",
+                                style: TextStyle(
+                                    fontSize: 12, color: Colors.grey[900])),
+                            SizedBox(
+                              height: 10,
                             ),
                             Row(),
                           ],
@@ -222,12 +221,220 @@ class HomePage extends StatelessWidget {
                       ),
                       Container(
                           width: size.width,
-                          color: Colors.green,
                           padding: EdgeInsets.all(10),
-                          child: Text(
-                            "Sales Chart",
-                            style: TextStyle(fontSize: 30, color: Colors.white),
-                          )),
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                      width: 50.0,
+                                      height: 50.0,
+                                      margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                                      alignment: Alignment.center,
+                                      decoration: new BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: new DecorationImage(
+                                              fit: BoxFit.scaleDown,
+                                              image: AssetImage("assets/images/logo.jpg")
+                                          )
+                                      )),
+                                  Text("name 1")
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Container(
+                                      width: 50.0,
+                                      height: 50.0,
+                                      margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                                      alignment: Alignment.center,
+                                      decoration: new BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: new DecorationImage(
+                                              fit: BoxFit.scaleDown,
+                                              image: AssetImage("assets/images/logo.jpg")
+                                          )
+                                      )),
+                                  Text("name 2")
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Container(
+                                      width: 50.0,
+                                      height: 50.0,
+                                      margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                                      alignment: Alignment.center,
+                                      decoration: new BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: new DecorationImage(
+                                              fit: BoxFit.scaleDown,
+                                              image: AssetImage("assets/images/logo.jpg")
+                                          )
+                                      )),
+                                  Text("name 3")
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Container(
+                                      width: 50.0,
+                                      height: 50.0,
+                                      margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                                      alignment: Alignment.center,
+                                      decoration: new BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: new DecorationImage(
+                                              fit: BoxFit.scaleDown,
+                                              image: AssetImage("assets/images/logo.jpg")
+                                          )
+                                      )),
+                                  Text("name 4")
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Container(
+                                      width: 50.0,
+                                      height: 50.0,
+                                      margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                                      alignment: Alignment.center,
+                                      decoration: new BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: new DecorationImage(
+                                              fit: BoxFit.scaleDown,
+                                              image: AssetImage("assets/images/logo.jpg")
+                                          )
+                                      )),
+                                  Text("name 5")
+                                ],
+                              ),
+                            ],
+                          ))
+                    ],
+                  )),
+              SizedBox(
+                height: 10,
+              ),
+              Card(
+                  clipBehavior: Clip.antiAlias,
+                  elevation: 10,
+                  margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Top Dealers",
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.black)),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text("April 2021",
+                                style: TextStyle(
+                                    fontSize: 12, color: Colors.grey[900])),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(),
+                          ],
+                        ),
+                      ),
+                      Container(
+                          width: size.width,
+                          padding: EdgeInsets.all(10),
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                      width: 50.0,
+                                      height: 50.0,
+                                      margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                                      alignment: Alignment.center,
+                                      decoration: new BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: new DecorationImage(
+                                              fit: BoxFit.scaleDown,
+                                              image: AssetImage("assets/images/logo.jpg")
+                                          )
+                                      )),
+                                  Text("name 1")
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Container(
+                                      width: 50.0,
+                                      height: 50.0,
+                                      margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                                      alignment: Alignment.center,
+                                      decoration: new BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: new DecorationImage(
+                                              fit: BoxFit.scaleDown,
+                                              image: AssetImage("assets/images/logo.jpg")
+                                          )
+                                      )),
+                                  Text("name 2")
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Container(
+                                      width: 50.0,
+                                      height: 50.0,
+                                      margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                                      alignment: Alignment.center,
+                                      decoration: new BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: new DecorationImage(
+                                              fit: BoxFit.scaleDown,
+                                              image: AssetImage("assets/images/logo.jpg")
+                                          )
+                                      )),
+                                  Text("name 3")
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Container(
+                                      width: 50.0,
+                                      height: 50.0,
+                                      margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                                      alignment: Alignment.center,
+                                      decoration: new BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: new DecorationImage(
+                                              fit: BoxFit.scaleDown,
+                                              image: AssetImage("assets/images/logo.jpg")
+                                          )
+                                      )),
+                                  Text("name 4")
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Container(
+                                      width: 50.0,
+                                      height: 50.0,
+                                      margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                                      alignment: Alignment.center,
+                                      decoration: new BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: new DecorationImage(
+                                              fit: BoxFit.scaleDown,
+                                              image: AssetImage("assets/images/logo.jpg")
+                                          )
+                                      )),
+                                  Text("name 5")
+                                ],
+                              ),
+                            ],
+                          ))
                     ],
                   )),
             ])),

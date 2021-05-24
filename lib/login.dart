@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
-import 'package:flutter_app/main.dart';
+import 'package:flutter_app/home.dart';
 import 'package:flutter_app/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
@@ -50,9 +50,9 @@ class _LoginPageState extends State<LoginPage> {
 
   signIn(String phno, pass) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    Map data = {'phone_no': phno, 'password': pass};
+    Map data = {'userid': phno, 'password': pass};
     var jsonResponse = null;
-    var response = await post("https://defendersdevelopers.tech/roof/login.php",
+    var response = await post("https://api.jumboroofings.co.in/V1/Auth/login",
         body: data);
     if (response.statusCode == 200) {
       jsonResponse = json.decode(response.body);
@@ -60,10 +60,13 @@ class _LoginPageState extends State<LoginPage> {
         setState(() {
           _isLoading = false;
         });
-        if (jsonResponse["success"] == false) {
-          showToast("wrong credentials");
+        if (jsonResponse["status"] == false) {
+          showToast(jsonResponse["message"]);
         } else {
-          sharedPreferences.setString("token", jsonResponse['phone_no']);
+          sharedPreferences.setString("token", jsonResponse['token']);
+          sharedPreferences.setString("token", jsonResponse['token']);
+          sharedPreferences.setString("token", jsonResponse['token']);
+          sharedPreferences.setString("token", jsonResponse['token']);
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (BuildContext context) => MainPage()),
               (Route<dynamic> route) => false);
