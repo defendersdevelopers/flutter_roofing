@@ -34,7 +34,7 @@ class _Splash_PageState extends State<Splash_Page> {
   Widget build(BuildContext context) {
     return Container(
         color: Colors.grey[100],
-        child:Image(image: AssetImage("assets/images/logo.jpg"))
+        child:Image(image: AssetImage("asset/images/logo.jpg"))
     );
   }
 }
