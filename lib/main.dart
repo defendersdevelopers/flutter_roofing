@@ -33,8 +33,11 @@ class _Splash_PageState extends State<Splash_Page> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: Colors.grey[100],
-        child:Image(image: AssetImage("asset/images/logo.jpg"))
+        color: Colors.black,
+        child:Padding(
+          padding: const EdgeInsets.all(50.0),
+          child: Image(image: AssetImage("assets/images/jumbo_logo.png")),
+        )
     );
   }
 }

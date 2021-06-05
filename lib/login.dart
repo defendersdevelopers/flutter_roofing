@@ -8,6 +8,8 @@ import 'package:flutter_app/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 
+import 'models/userModel.dart';
+
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -15,6 +17,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _isLoading = false;
+  bool isVisible = true;
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +25,7 @@ class _LoginPageState extends State<LoginPage> {
         .copyWith(statusBarColor: Colors.transparent));
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-            // gradient: LinearGradient(
-            //     colors: [Colors.black, Colors.lightBlue],
-            //     begin: Alignment.topCenter,
-            //     end: Alignment.bottomCenter),
-            color: Colors.black),
+        decoration: BoxDecoration(color: Colors.black),
         child: _isLoading
             ? Center(child: CircularProgressIndicator())
             : ListView(
@@ -36,9 +34,14 @@ class _LoginPageState extends State<LoginPage> {
                   textSection(),
                   Container(
                       margin: EdgeInsets.fromLTRB(30, 10, 10, 10),
-                      child: Text("Forgot password?",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(color: Colors.blue))),
+                      child: TextButton(
+                        onPressed: (){
+                          print("hiii");
+                        },
+                        child: Text("Forgot password?",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(color: Colors.blue)),
+                      )),
                   btnSignin(),
                   //btnRegistration(),
                   textRegistration(),
@@ -50,10 +53,17 @@ class _LoginPageState extends State<LoginPage> {
 
   signIn(String phno, pass) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    Map data = {'userid': phno, 'password': pass};
+    var data = {'userid': phno, 'password': pass};
     var jsonResponse = null;
+
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('admin:1234'));
     var response = await post("https://api.jumboroofings.co.in/V1/Auth/login",
-        body: data);
+        body: data,
+        headers: <String, String>{
+          'authorization': basicAuth,
+          'X-API-KEY':'jumbo',
+        });
     if (response.statusCode == 200) {
       jsonResponse = json.decode(response.body);
       if (jsonResponse != null) {
@@ -63,16 +73,15 @@ class _LoginPageState extends State<LoginPage> {
         if (jsonResponse["status"] == false) {
           showToast(jsonResponse["message"]);
         } else {
-          sharedPreferences.setString("token", jsonResponse['token']);
-          sharedPreferences.setString("token", jsonResponse['token']);
-          sharedPreferences.setString("token", jsonResponse['token']);
-          sharedPreferences.setString("token", jsonResponse['token']);
+          sharedPreferences.setString("token",jsonResponse["message"]["token"]);
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (BuildContext context) => MainPage()),
               (Route<dynamic> route) => false);
         }
       }
-    } else {
+    }
+    else {
+
       setState(() {
         _isLoading = false;
       });
@@ -106,40 +115,26 @@ class _LoginPageState extends State<LoginPage> {
         elevation: 3.0,
         hoverColor: Colors.blueGrey,
         color: Colors.grey,
-        child: Text("Sign In", style: TextStyle(color: Colors.white)),
+        child: Text("Sign In", style: TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.bold)),
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
       ),
     );
   }
 
-  /*Container btnRegistration() {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: 50.0,
-      padding: EdgeInsets.symmetric(horizontal: 30.0),
-      margin: EdgeInsets.only(top: 15.0),
-      child: RaisedButton(
-        onPressed: () {
-          goToReg();
-        },
-        elevation: 3.0,
-        color: Colors.grey,
-        child: Text("Register", style: TextStyle(color: Colors.white)),
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
-      ),
-    );
-  }*/
-
   Container textRegistration() {
     return Container(
       margin: EdgeInsets.only(top: 30.0),
       child: Center(
-        child: Text(
-          'Signing in for the first time?',
-          textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.blueAccent),
+        child: TextButton(
+          onPressed: (){
+            print('hiii');
+          },
+          child: Text(
+            'Signing in for the first time?',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.blueAccent),
+          ),
         ),
       ),
     );
@@ -158,7 +153,7 @@ class _LoginPageState extends State<LoginPage> {
             cursorColor: Colors.white,
             style: TextStyle(color: Colors.white70),
             decoration: InputDecoration(
-              hintText: "Email Address",
+              hintText: "User Id",
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey),
               ),
@@ -167,15 +162,16 @@ class _LoginPageState extends State<LoginPage> {
               ),
               border: UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.white70)),
-              prefixIcon: Icon(Icons.email, color: Colors.white70),
+              prefixIcon: Icon(Icons.person, color: Colors.white70),
               hintStyle: TextStyle(color: Colors.white70),
             ),
+            keyboardType: TextInputType.emailAddress,
           ),
           SizedBox(height: 30.0),
           TextFormField(
             controller: passwordController,
             cursorColor: Colors.white,
-            obscureText: true,
+            obscureText: isVisible,
             style: TextStyle(color: Colors.white70),
             decoration: InputDecoration(
               hintText: "Password",
@@ -188,10 +184,14 @@ class _LoginPageState extends State<LoginPage> {
               border: UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.white70)),
               prefixIcon: Icon(Icons.lock, color: Colors.white70),
-              suffixText: 'SHOW',
-              suffixStyle: TextStyle(color: Colors.blue),
+              suffix: IconButton(icon: Icon(isVisible ? Icons.visibility_off : Icons.visibility, color: Colors.blueAccent),onPressed: (){
+                setState(() {
+                  isVisible = !isVisible;
+                });
+              },),
               hintStyle: TextStyle(color: Colors.white70),
             ),
+            keyboardType: TextInputType.visiblePassword,
           ),
         ],
       ),
@@ -203,12 +203,20 @@ class _LoginPageState extends State<LoginPage> {
       margin: EdgeInsets.only(top: 50.0),
       padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
       child: Center(
-        child: Text("SIGN IN",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 25.0,
-                fontWeight: FontWeight.bold)),
+        child: Column(
+          children: [
+            Image.asset("assets/images/jumbo_logo.png",width: 200,height: 200,),
+            SizedBox(
+              height: 10,
+            ),
+            Text("SIGN IN",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 25.0,
+                    fontWeight: FontWeight.bold)),
+          ],
+        ),
       ),
     );
   }
@@ -218,3 +226,4 @@ class _LoginPageState extends State<LoginPage> {
         duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
   }
 }
+

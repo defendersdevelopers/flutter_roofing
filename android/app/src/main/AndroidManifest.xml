@@ -2,7 +2,7 @@
     package="com.defenders.flutter_app">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="roofing app"
+        android:label="Jumbo Roofing"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
